@@ -1,3 +1,55 @@
 <p>
   my-info works!
 </p>
+<div class="modal-body">
+  <form [formGroup]="infoForm">
+    <input type="text" class="form-control mb-3" placeholder="Username" formControlName="login">
+    <input type="text" class="form-control mb-3" placeholder="Password" formControlName="password">
+    <input type="number" class="form-control mb-3" placeholder="Age" formControlName="age">
+    <input list="listFamily" class="form-control mb-3" placeholder="Family" formControlName="family">
+    <input list="listRole" class="form-control mb-3" placeholder="Role" formControlName="role">
+    <input list="listFood" class="form-control mb-3" placeholder="Food" formControlName="food">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div>
+
+  <!-- ngIf for check the current mode and show the right button -->
+  <div *ngIf="editMode; then footerBlock1; else footerBlock2"></div>
+
+  <ng-template #footerBlock1>
+    <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
+
+  </ng-template>
+
+  <ng-template #footerBlock2>
+    <button type="button" class="btn btn-primary" (click)="switchMode(true)">Edit mode</button>
+  </ng-template>
+
+</div>
+
+<datalist id="listFamily">
+  <option>CFDT</option>
+  <option>CFTC</option>
+  <option>CGT</option>
+  <option>CGT-FO</option>
+  <option>CFE-CGC</option>
+  <option>UNSA</option>
+  <option>FSU</option>
+</datalist>
+
+<datalist id="listRole">
+  <option>Casseur</option>
+  <option>Protection</option>
+  <option>Parleur</option>
+  <option>Bloqueur</option>
+  <option>Cuisinier</option>
+</datalist>
+
+<datalist id="listFood">
+  <option>Tout</option>
+  <option>Sans Gluten</option>
+  <option>Sans Lactose</option>
+  <option>Vegan</option>
+  <option>Vegetarien</option>
+</datalist>

@@ -1,5 +1,6 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
+const { ObjectId } = require('mongodb');
 const bodyParser = require('body-parser')
 const app = express()
 
@@ -23,7 +24,7 @@ client.connect(err => {
     });
 
     app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(bodyParser.json()); 
+    app.use(bodyParser.json());
 
     app.get('/', function (req, res) {
         res.send('Hello World')
@@ -35,7 +36,7 @@ client.connect(err => {
             if (err) return console.log(err)
 
             console.log('saved to database')
-            res.send('users created successfully')
+            res.send('{ "response": "users created successfully"}')
         })
     })
 
@@ -46,8 +47,53 @@ client.connect(err => {
             if (results.length > 0) {
                 res.send(results[0]['_id']);
             } else {
-                res.send("");
+                res.send('{ "response": ""}');
             }
+        })
+    })
+
+    app.get('/api/user/exist', (req, res) => {
+        console.log(req.query)
+        db.collection('users').find({ _id: ObjectId(req.query['id']) }).toArray(function (err, results) {
+            console.log(results)
+            if (results.length > 0) {
+                res.send('{ "response": "exist"}');
+            } else {
+                res.send('{ "response": "not exist"}');
+            }
+        })
+    })
+
+    app.get('/api/user/info', (req, res) => {
+        console.log(req.query)
+
+        db.collection('users').find({ _id: ObjectId(req.query['id']) }).toArray(function (err, results) {
+            console.log(results)
+            if (results.length > 0) {
+                res.send(results[0]);
+            } else {
+                res.send('{ "response": ""}');
+            }
+        })
+    })
+
+    app.post('/api/user/modify', (req, res) => {
+        console.log(req.body)
+        const dataUpdate = {
+            $set: {
+                login: req.body['login'],
+                password: req.body['password'],
+                age: req.body['age'],
+                family: req.body['family'],
+                role: req.body['role'],
+                food: req.body['food']
+            }
+        }
+
+        db.collection('users').updateOne({ _id: ObjectId(req.body['id']) }, dataUpdate, function (err, results) {
+            if (err) throw err;
+
+            res.send('{ "response": "Correctly Updated"}');
         })
     })
 });
