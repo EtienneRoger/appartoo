@@ -26,6 +26,8 @@ export class MyInfoComponent implements OnInit {
     ngOnInit() {
         this.checkUserStatus()
         this.getCurrentUserData();
+        this.infoForm.disable()
+
     }
 
 
