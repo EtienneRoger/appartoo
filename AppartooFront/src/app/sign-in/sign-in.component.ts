@@ -8,7 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-    url = "http://localhost:3000/api/add/user"
+    baseUrl = "http://localhost:3000/"
+
     registerForm = new FormGroup({
         login: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required]),
@@ -26,6 +27,9 @@ export class SignInComponent implements OnInit {
     register() {
 
         if (this.registerForm.valid) {
+
+            const url = this.baseUrl + "api/add/user"
+
             const jsonData = '{ "login" : "' + this.registerForm.get('login').value + '",' +
                 '"password":"' + this.registerForm.get('password').value + '",' + 
                 '"password":"' + this.registerForm.get('password').value + '",' + 
@@ -40,7 +44,7 @@ export class SignInComponent implements OnInit {
                 })
             }
 
-            this.http.post(this.url, jsonData, httpOptions).subscribe(
+            this.http.post(url, jsonData, httpOptions).subscribe(
                 (response) => {
                     console.log(response)
                     document.location.href = "http://localhost:4200/login";
@@ -55,4 +59,5 @@ export class SignInComponent implements OnInit {
             return;
         }
     }
+
 }
