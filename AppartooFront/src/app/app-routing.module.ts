@@ -22,10 +22,10 @@ const routes: Routes = [
         component: LogOutComponent,
     }, {
         path: 'me',
-        component: MyFriendsComponent,
+        component: MyInfoComponent,
     }, {
         path: 'friends',
-        component: MyInfoComponent,
+        component: MyFriendsComponent,
     },
 ]
 
