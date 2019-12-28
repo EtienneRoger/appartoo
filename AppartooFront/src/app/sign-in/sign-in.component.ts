@@ -12,6 +12,10 @@ export class SignInComponent implements OnInit {
     registerForm = new FormGroup({
         login: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required]),
+        age: new FormControl(''),
+        family: new FormControl(''),
+        role: new FormControl(''),
+        food: new FormControl(''),
 
     });
     constructor(private http: HttpClient) { }
@@ -23,7 +27,12 @@ export class SignInComponent implements OnInit {
 
         if (this.registerForm.valid) {
             const jsonData = '{ "login" : "' + this.registerForm.get('login').value + '",' +
-                '"password":"' + this.registerForm.get('password').value + '"}'
+                '"password":"' + this.registerForm.get('password').value + '",' + 
+                '"password":"' + this.registerForm.get('password').value + '",' + 
+                '"age":"' + this.registerForm.get('age').value + '",' + 
+                '"family":"' + this.registerForm.get('family').value + '",' + 
+                '"role":"' + this.registerForm.get('role').value + '",' + 
+                '"food":"' + this.registerForm.get('food').value + '"}'
 
             const httpOptions = {
                 headers: new HttpHeaders({
@@ -31,8 +40,12 @@ export class SignInComponent implements OnInit {
                 })
             }
 
-            return this.http.post(this.url, jsonData, httpOptions).subscribe(
-                (response) => console.log(response),
+            this.http.post(this.url, jsonData, httpOptions).subscribe(
+                (response) => {
+                    console.log(response)
+                    document.location.href = "http://localhost:4200/login";
+
+                },
                 (error) => console.log(error)
             )
 

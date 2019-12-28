@@ -2,8 +2,12 @@
   sign-in works!
 </p>
 
-<form [formGroup]= "registerForm" (ngSubmit)="register()">
-  <input #login type="text" class="form-control mb-3" placeholder="Username" formControlName="login">
-  <input #password type="text" class="form-control mb-3" placeholder="Password" formControlName="password">
-  <button type="submit" class="btn btn-primary" >Submit</button>
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <input type="text" class="form-control mb-3" placeholder="Username" formControlName="login">
+  <input type="text" class="form-control mb-3" placeholder="Password" formControlName="password">
+  <input type="number" class="form-control mb-3" placeholder="Age" formControlName="age">
+  <input type="text" class="form-control mb-3" placeholder="Family" formControlName="family">
+  <input type="text" class="form-control mb-3" placeholder="Role" formControlName="role">
+  <input type="text" class="form-control mb-3" placeholder="Food" formControlName="food">
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
