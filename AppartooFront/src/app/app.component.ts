@@ -10,7 +10,10 @@ export class AppComponent {
     title = 'AppartooFront :)';
 
 
-
+    logout() {
+        sessionStorage.setItem('idUser', "")
+        document.location.href = "http://localhost:4200/login";
+    }
 
 
 
