@@ -38,4 +38,16 @@ client.connect(err => {
             res.send('users created successfully')
         })
     })
+
+    app.get('/api/login', (req, res) => {
+        console.log(req.query)
+        db.collection('users').find(req.query).toArray(function (err, results) {
+            console.log(results)
+            if (results.length > 0) {
+                res.send(results[0]['_id']);
+            } else {
+                res.send("");
+            }
+        })
+    })
 });
