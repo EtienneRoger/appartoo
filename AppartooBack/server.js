@@ -96,4 +96,52 @@ client.connect(err => {
             res.send('{ "response": "Correctly Updated"}');
         })
     })
+
+    app.get('/api/user/friends', (req, res) => {
+        console.log(req.query)
+
+        db.collection('users').find({ _id: ObjectId(req.query['id']) }).toArray(function (err, results) {
+            console.log(results)
+            console.log(results[0]['friends'])
+            if (results.length > 0 && results[0]['friends'] != undefined) {
+                res.send(results[0]['friends']);
+            } else {
+                res.send('{ "response": ""}');
+            }
+        })
+    })
+
+    app.get('/api/user/all', (req, res) => {
+        console.log(req.query)
+
+        db.collection('users').find().toArray(function (err, results) {
+            console.log(results)
+            if (results.length > 0) {
+                let response = "[";
+                for (const item in results) {
+                    response += '{"id":"' + results[item]['_id'] + '","name":"' + results[item]['login'] + '"},'
+                }
+                response = response.substring(0, response.length -1)
+                response += "]"
+                res.send(response)
+            } else {
+                res.send('{ "response": ""}');
+            }
+        })
+    })
+
+    app.post('/api/user/modify/friends', (req, res) => {
+        console.log(req.body)
+        const dataUpdate = {
+            $set: {
+                friends: req.body['friends']
+            }
+        }
+
+        db.collection('users').updateOne({ _id: ObjectId(req.body['id']) }, dataUpdate, function (err, results) {
+            if (err) throw err;
+
+            res.send('{ "response": "Correctly Updated"}');
+        })
+    })
 });

@@ -1,3 +1,23 @@
 <p>
   my-friends works!
 </p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <select id="notFriends" class="form-control" multiple>
+        <option *ngFor="let user of users" [value]="user.id">{{user.name}}</option>
+      </select>
+    </div>
+    <div class="col text-center">
+      <button type="submit" (click)="changeItem('notFriends')">Add</button>
+      <button type="submit" (click)="saveChange()">Save</button>
+      <button type="submit" (click)="changeItem('friends')">Delete</button>
+    </div>
+      <div class="col">
+        <select id="friends" class="form-control" multiple>
+          <option *ngFor="let friend of friends" [value]="friend.id">{{friend.name}}</option>
+
+        </select>
+      </div>
+    </div>
+  </div>
