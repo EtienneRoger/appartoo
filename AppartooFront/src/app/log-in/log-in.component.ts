@@ -28,7 +28,7 @@ export class LogInComponent implements OnInit {
             return this.http.get(this.url).subscribe(
                 (response) => {
                     console.log(response)
-                    sessionStorage.setItem('idUser', JSON.stringify(response));
+                    sessionStorage.setItem('idUser', response.toString());
                     document.location.href = "http://localhost:4200/me";
                 },
                 (error) => console.log(error)
