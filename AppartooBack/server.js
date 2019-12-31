@@ -32,11 +32,12 @@ client.connect(err => {
 
     app.post('/api/add/user', (req, res) => {
         console.log(req.body)
-        db.collection('users').save(req.body, (err, result) => {
+        db.collection('users').insertOne(req.body, (err, result) => {
             if (err) return console.log(err)
 
             console.log('saved to database')
-            res.send('{ "response": "users created successfully"}')
+            console.log(result.ops)
+            res.send('{ "response": "users created successfully", "name":"' + result.ops[0]['login'] + '", "id":"' + result.ops[0]['_id'] +'"}')
         })
     })
 
@@ -144,4 +145,7 @@ client.connect(err => {
             res.send('{ "response": "Correctly Updated"}');
         })
     })
+
+
+
 });

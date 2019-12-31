@@ -16,6 +16,17 @@ export class MyFriendsComponent implements OnInit {
     users = []
     friends = []
 
+    registerForm = new FormGroup({
+        login: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required]),
+        age: new FormControl(''),
+        family: new FormControl(''),
+        role: new FormControl(''),
+        food: new FormControl(''),
+
+    });
+
+
     constructor(private http: HttpClient) { }
 
     ngOnInit() {
@@ -110,5 +121,44 @@ export class MyFriendsComponent implements OnInit {
             },
             (error) => console.log(error)
         )
+    }
+
+
+    register() {
+
+        if (this.registerForm.valid) {
+
+            const url = this.baseUrl + "api/add/user"
+
+            const jsonData = '{ "login" : "' + this.registerForm.get('login').value + '",' +
+                '"password":"' + this.registerForm.get('password').value + '",' +
+                '"password":"' + this.registerForm.get('password').value + '",' +
+                '"age":"' + this.registerForm.get('age').value + '",' +
+                '"family":"' + this.registerForm.get('family').value + '",' +
+                '"role":"' + this.registerForm.get('role').value + '",' +
+                '"food":"' + this.registerForm.get('food').value + '"}'
+
+            const httpOptions = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                })
+            }
+
+            this.http.post(url, jsonData, httpOptions).subscribe(
+                (response) => {
+                    console.log(response)
+                    const newfriend = '{"id":"' + response['id'] + '","name":"' + response['name'] + '"}'
+
+                    this.friends.push(JSON.parse(newfriend))
+                    console.log(this.friends)
+                },
+                (error) => console.log(error)
+            )
+
+
+        } else {
+            console.log("Le Formulaire n'est pas correctement rempli.")
+            return;
+        }
     }
 }

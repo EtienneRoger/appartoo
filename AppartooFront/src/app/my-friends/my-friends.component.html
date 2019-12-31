@@ -13,11 +13,48 @@
       <button type="submit" (click)="saveChange()">Save</button>
       <button type="submit" (click)="changeItem('friends')">Delete</button>
     </div>
-      <div class="col">
-        <select id="friends" class="form-control" multiple>
-          <option *ngFor="let friend of friends" [value]="friend.id">{{friend.name}}</option>
+    <div class="col">
+      <select id="friends" class="form-control" multiple>
+        <option *ngFor="let friend of friends" [value]="friend.id">{{friend.name}}</option>
 
-        </select>
-      </div>
+      </select>
     </div>
   </div>
+
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <input type="text" class="form-control mb-3" placeholder="Username" formControlName="login">
+    <input type="text" class="form-control mb-3" placeholder="Password" formControlName="password">
+    <input type="number" class="form-control mb-3" placeholder="Age" formControlName="age">
+    <input list="listFamily" class="form-control mb-3" placeholder="Family" formControlName="family">
+    <input list="listRole" class="form-control mb-3" placeholder="Role" formControlName="role">
+    <input list="listFood" class="form-control mb-3" placeholder="Food" formControlName="food">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+<datalist id="listFamily">
+  <option>CFDT</option>
+  <option>CFTC</option>
+  <option>CGT</option>
+  <option>CGT-FO</option>
+  <option>CFE-CGC</option>
+  <option>UNSA</option>
+  <option>FSU</option>
+</datalist>
+
+<datalist id="listRole">
+  <option>Casseur</option>
+  <option>Protection</option>
+  <option>Parleur</option>
+  <option>Bloqueur</option>
+  <option>Cuisinier</option>
+</datalist>
+
+<datalist id="listFood">
+  <option>Tout</option>
+  <option>Sans Gluten</option>
+  <option>Sans Lactose</option>
+  <option>Vegan</option>
+  <option>Vegetarien</option>
+</datalist>
